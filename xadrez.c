@@ -4,6 +4,7 @@ char tabuleiro[8][8];
 char dama = 'D';
 char torre = 'T';
 char bispo = 'B';
+char cavalo = 'C';
 
 int movimentosDaTorre[14][2];
 int contaMovimentosTorre = 0;
@@ -132,6 +133,30 @@ void PegarMovimentosDaDama(int x, int y)
         }
     }
 }
+int movimentosDoCavalo[8][2];
+int contaMovimentosCavalo = 0;
+void PegaMovimentosDoCavalo(int x, int y)
+{
+    int moves[8][2] = 
+    {
+        {-2, -1}, {-2, 1}, {-1, -2}, {-1, 2},
+        {1, -2}, {1, 2}, {2, -1}, {2, 1}
+    }; 
+    for(int i = 0; i < 8; i++)
+    {
+        int dx = moves[i][0];
+        int dy = moves[i][1];
+        int nx = x + dx;
+        int ny = y + dy;
+        if(tabuleiro[nx][ny] == '*' && nx >= 0 && nx < 8 && ny >=0 && ny < 8)
+        {
+            movimentosDoCavalo[contaMovimentosCavalo][0] = nx;
+            movimentosDoCavalo[contaMovimentosCavalo][1] = ny;
+            contaMovimentosCavalo++;
+        }
+    }
+}
+
 
 void IniciaTabuleiro()
 {
@@ -225,6 +250,31 @@ void MoverDama(int fromX, int fromY, int toX, int toY)
         printf("A peça que está tentando movimentar não é uma Dama!\n");
     }
 }
+void MoverCavalo(int fromX, int fromY, int toX, int toY)
+{
+    int isValidMove = 0;
+    if(tabuleiro[fromX][fromY] == cavalo)
+    {
+        for (size_t i = 0; i < contaMovimentosCavalo; i++)
+        {
+            if(movimentosDoCavalo[i][0] == toX && movimentosDoCavalo[i][1] == toY)
+            {
+                tabuleiro[toX][toY] = cavalo;
+                tabuleiro[fromX][fromY] = '*';
+                isValidMove = 1;
+            } 
+        }
+        if(isValidMove == 0)
+        {
+            printf("Movimento Inválido!\n");
+        }
+        
+    }
+    else
+    {
+        printf("A peça que está tentando mover não é um cavalo!\n");
+    }
+}
 int main() {
     printf("Movendo a torre!\n");
     IniciaTabuleiro();
@@ -256,6 +306,17 @@ int main() {
     PegarMovimentosDaDama(7, 0);
     MoverDama(7, 0, 0, 0);
     ImprimeTabuleiro();
+
+    printf("Movendo o Cavalo!\n");
+    IniciaTabuleiro();
+    tabuleiro[3][4] = cavalo;
+    ImprimeTabuleiro();
+
+    printf("Para Baixo - 2 casas e À Esquerda - 1 casa\n");
+    PegaMovimentosDoCavalo(3, 4);
+    MoverCavalo(3, 4, 2, 2);
+    ImprimeTabuleiro();
+
     return 0;
 }
 
