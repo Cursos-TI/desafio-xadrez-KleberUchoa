@@ -45,7 +45,7 @@ void PegarMovimentosDaTorre(int x, int y)
 int movimentosDoBispo[14][2];
 int contaMovimentosBispo = 0;
 
-void PegarMovimentoDoBispo(int x, int y)
+void PegarMovimentosDoBispo(int x, int y)
 {
     int direcao[2] = {-1, 1};
     for(int i = 0; i < 2; i++)
@@ -76,7 +76,7 @@ void PegarMovimentoDoBispo(int x, int y)
 int movimentosDaDama[28][2];
 int contaMovimentosDama = 0;
 
-void PegarMovimentoDaDama(int x, int y)
+void PegarMovimentosDaDama(int x, int y)
 {
     int direcao[2] = {-1, 1};
     for(int i = 0; i < 2; i++)
@@ -243,7 +243,7 @@ int main() {
     ImprimeTabuleiro();
     
     printf("Para Cima à Direita - 5 Casas\n"); 
-    PegarMovimentoDoBispo(0, 0);
+    PegarMovimentosDoBispo(0, 0);
     MoverBispo(0, 0, 5, 5); //posição 0,0 para a posição 5,5
     ImprimeTabuleiro();
     
@@ -253,7 +253,7 @@ int main() {
     ImprimeTabuleiro();
 
     printf("À Esquerda - 8 casas\n");
-    PegarMovimentoDaDama(7, 0);
+    PegarMovimentosDaDama(7, 0);
     MoverDama(7, 0, 0, 0);
     ImprimeTabuleiro();
     return 0;
