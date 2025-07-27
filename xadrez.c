@@ -13,32 +13,34 @@ void PegarMovimentosDaTorre(int x, int y)
     int direcao[2] = {-1, 1};
     for(int i = 0; i < 2; i++)
     {
-        for(int j = x + direcao[i]; j >= 0 && j < 8; j += direcao[i])
+        //Movimento pela coluna
+        int ny = y + direcao[i];
+        while (ny >= 0 && ny < 8)
         {
-                if(tabuleiro[j][y] == '*')
-                {
-                    movimentosDaTorre[contaMovimentosTorre][0] = j;
-                    movimentosDaTorre[contaMovimentosTorre][1] = y;
-                    printf("Movimento da Torre: %d, %d\n", x, j);
-                    contaMovimentosTorre++;
-                }else{
-                    break;
-                }
+            if(tabuleiro[x][ny] == '*')
+            {
+            movimentosDaTorre[contaMovimentosTorre][0] = x;
+            movimentosDaTorre[contaMovimentosTorre][1] = ny;
+            contaMovimentosTorre++;
+            printf("Movimento da Torre: %d, %d\n", x, ny);
+            }
+            else break; 
+            ny += direcao[i];
         }
-        for(int j = y + direcao[i]; j >= 0 && j < 8; j += direcao[i])
+        //Movimento pela linha
+        int nx = x + direcao[i];
+        while (nx >= 0 && nx < 8)
         {
-                if(tabuleiro[x][j] == '*')
-                {
-                    movimentosDaTorre[contaMovimentosTorre][0] = x;
-                    movimentosDaTorre[contaMovimentosTorre][1] = j;
-                    printf("Movimento da Torre: %d, %d\n", j, y);
-                    contaMovimentosTorre++;
-                }
-                else{
-                    break;
-                }
+            if(tabuleiro[nx][y] == '*')
+            {
+                movimentosDaTorre[contaMovimentosTorre][0] = nx;
+                movimentosDaTorre[contaMovimentosTorre][1] = y;
+                contaMovimentosTorre++;
+                printf("Movimento da Torre: %d, %d\n", nx, y);
+            } else break; 
+            nx += direcao[i];
         }
-    }   
+    }  
 }
 int movimentosDoBispo[14][2];
 int contaMovimentosBispo = 0;
@@ -48,25 +50,28 @@ void PegarMovimentoDoBispo(int x, int y)
     int direcao[2] = {-1, 1};
     for(int i = 0; i < 2; i++)
     {
-        //Movimentos na diagonal
-        for(int j = x + direcao[i]; j >= 0 && j < 8; j += direcao[i])
+        for(int j = 0; j < 2; j++)
         {
-            for(int k = y + direcao[i]; k >= 0 && k < 8; k += direcao[i])
+            int dx = direcao[i];
+            int dy = direcao[j];
+            int nx = x + dx;
+            int ny = y + dy; 
+            while (nx >= 0 && nx < 8 && ny >= 0 && ny < 8)
             {
-                if(tabuleiro[j][k] == '*')
+                if(tabuleiro[nx][ny] == '*')
                 {
-                    movimentosDoBispo[contaMovimentosBispo][0] = j;
-                    movimentosDoBispo[contaMovimentosBispo][1] = k;
-                    printf("Movimento do bispo: %d, %d\n", j, k);
+                    movimentosDoBispo[contaMovimentosBispo][0] = nx;
+                    movimentosDoBispo[contaMovimentosBispo][1] = ny;
+                    printf("Movimento do bispo: %d, %d\n", nx, ny);
                     contaMovimentosBispo++;
-                }
-                else{
-                    break;
-                }
+                } else break;
+                ny += dy;
+                nx += dx;
             }
         }
+       
+        
     }
-
 }
 int movimentosDaDama[28][2];
 int contaMovimentosDama = 0;
@@ -76,49 +81,56 @@ void PegarMovimentoDaDama(int x, int y)
     int direcao[2] = {-1, 1};
     for(int i = 0; i < 2; i++)
     {
-        for(int j = x + direcao[i]; j >= 0 && j < 8; j += direcao[i])
+         //Movimento pela coluna
+        int ny = y + direcao[i];
+        while (ny >= 0 && ny < 8)
         {
-                if(tabuleiro[j][y] == '*')
-                {
-                    movimentosDaDama[contaMovimentosDama][0] = j;
-                    movimentosDaDama[contaMovimentosDama][1] = y;
-                    printf("Movimento da dama: %d, %d\n", j, y);
-                    contaMovimentosDama++;
-                }else{
-                    break;
-                }
-        }
-        for(int j = y + direcao[i]; j >= 0 && j < 8; j += direcao[i])
-        {
-                if(tabuleiro[x][j] == '*')
-                {
-                    movimentosDaDama[contaMovimentosDama][0] = x;
-                    movimentosDaDama[contaMovimentosDama][1] = j;
-                    printf("Movimento da dama: %d, %d\n", x, j);
-                    contaMovimentosDama++;
-                }
-                else{
-                    break;
-                }
-        }
-        for(int j = x + direcao[i]; j >= 0 && j < 8; j += direcao[i])
-        {
-            for(int k = y + direcao[i]; k >= 0 && k < 8; k += direcao[i])
+            if(tabuleiro[x][ny] == '*')
             {
-                if(tabuleiro[j][k] == '*')
+                movimentosDaDama[contaMovimentosDama][0] = x;
+                movimentosDaDama[contaMovimentosDama][1] = ny;
+                contaMovimentosDama++;
+                printf("Movimento da Dama: %d, %d\n", x, ny);
+            }
+            else break; 
+            ny += direcao[i];
+        }
+        //Movimento pela linha
+        int nx = x + direcao[i];
+        while (nx >= 0 && nx < 8)
+        {
+            if(tabuleiro[nx][y] == '*')
+            {
+                movimentosDaDama[contaMovimentosDama][0] = nx;
+                movimentosDaDama[contaMovimentosDama][1] = y;
+                contaMovimentosDama++;
+                printf("Movimento da Dama: %d, %d\n", nx, y);
+            } else break; 
+            nx += direcao[i];
+        }
+        nx = x + direcao[i];
+        ny = y + direcao[i];
+        //Movimentos na diagonal
+        for(int j = 0; j < 2; j++)
+        {
+            int dx = direcao[i];
+            int dy = direcao[j];
+            int nx = x + dx;
+            int ny = y + dy; 
+            while (nx >= 0 && nx < 8 && ny >= 0 && ny < 8)
+            {
+                if(tabuleiro[nx][ny] == '*')
                 {
-                    movimentosDaDama[contaMovimentosDama][0] = j;
-                    movimentosDaDama[contaMovimentosDama][1] = k;
-                    printf("Movimento da dama: %d, %d\n", j, k);
+                    movimentosDaDama[contaMovimentosDama][0] = nx;
+                    movimentosDaDama[contaMovimentosDama][1] = ny;
+                    printf("Movimento da dama: %d, %d\n", nx, ny);
                     contaMovimentosDama++;
-                }
-                else{
-                    break;
-                }
+                } else break;
+                ny += dy;
+                nx += dx;
             }
         }
     }
-
 }
 
 void IniciaTabuleiro()
@@ -138,7 +150,7 @@ void ImprimeTabuleiro()
     {
         for(int j = 0; j < 8; j++)
         {
-            printf("%c", tabuleiro[i][j]);
+            printf("%c", tabuleiro[j][i]);
         }
         printf("\n");
     }
@@ -149,8 +161,8 @@ int main() {
     IniciaTabuleiro();
     //Posição inicial
     tabuleiro[0][0] = torre;
-    tabuleiro[0][2] = bispo;
-    tabuleiro[0][3] = dama;
+    tabuleiro[2][0] = bispo;
+    tabuleiro[3][0] = dama;
     ImprimeTabuleiro();
     PegarMovimentosDaTorre(0, 0);
     PegarMovimentoDoBispo(2, 0);
