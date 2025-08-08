@@ -32,8 +32,8 @@ void MoveCavalo(int vezes)
     for(int i = 0; i < vezes; i++)
     {
         printf("%dº movimento\n", vezes);
-        printf("Baixo\n");
-        printf("Baixo\n");
+        for(int j = 0; j < 2; j++)
+            printf("Baixo\n");
         printf("Esquerda\n");
     }
 }
